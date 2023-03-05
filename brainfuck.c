@@ -17,7 +17,7 @@ int main(int argc, char** argv)
     fseek(fp, 0, SEEK_END);
     size_t fs = ftell(fp);
     fseek(fp, 0, SEEK_SET);
-    if(fread(s, 1, fs, fp) == fs){
+    if(!fread(s, 1, fs, fp)){
         printf("Can't read file!!!\n");
         return 1;
     }
