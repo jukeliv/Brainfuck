@@ -1,5 +1,3 @@
 #!/bin/sh
-@echo off
-gcc brainfuck.c -o brainfuck.exe -Wall -O2 -static
-objcopy --strip-unneeded brainfuck.exe
-strip brainfuck.exe
+gcc brainfuck.c -o brainfuck.out -Wall -Os -static
+strip brainfuck.out

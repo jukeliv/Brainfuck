@@ -1,88 +1,60 @@
-#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
 int main(int argc, char** argv)
 {
-    if(argc < 2)
-    {
-        fprintf(stderr, "Not enough arguments!!!\n");
+    if(argc < 2){
+        printf("Not enough arguments!!!\n");
         return 1;
     }
-    char memory[30000];
-    unsigned short dp = 0;
-
+    unsigned char memory[30000] = {0};
+    unsigned char p = 0;
     FILE *fp;
-    char buffer[1000];
-    
-    fp = fopen(argv[1], "r");
-    if (!fp) {
+    char s[1000];
+    if (!(fp = fopen(argv[1], "r"))) {
         printf("Couldn't to open file\n");
         return 1;
     }
-    
     fseek(fp, 0, SEEK_END);
-
-    size_t fsize = ftell(fp);
-    
+    size_t fs = ftell(fp);
     fseek(fp, 0, SEEK_SET);
-    
-    if(fread(buffer, 1, fsize, fp) == fsize)
-    {
-        fprintf(stderr, "Can't read file!!!\n");
+    if(fread(s, 1, fs, fp) == fs){
+        printf("Can't read file!!!\n");
         return 1;
     }
-    
     fclose(fp);
-    
-    unsigned char loop = 0;
-
-    unsigned short pos = 0;
-    unsigned short dp_c = 0;
-    unsigned short index = 0;
-
-    while(index < fsize)
-    {
-        char c = buffer[index];
-        switch (c)
-        {
+    unsigned char l = 0, ps = 0, pi = 0;
+    for(int i = 0; i < fs; ++i){
+        switch (s[i]){
         case '>':
-            dp++;
+            p++;
             break;
         case '<':
-            dp--;
+            p--;
             break;
         case '+':
-            memory[dp]++;
+            memory[p]++;
             break;
         case '-':
-            memory[dp]--;
+            memory[p]--;
             break;
         case '.':
-            putchar(memory[dp]);
+            putchar(memory[p]);
             break;
         case ',':
-            memory[dp] = getchar();
+            memory[p] = getchar();
             break;
         case '[':
-            dp_c = dp;
-
-            if ((memory[dp_c]-1))
-            {
-                loop = 1;
-                pos = index-1;
-            }
-            else
-                loop = 0;
+            pi = p;
+            
+            l = (memory[pi]-1);
+            if (l) ps = i-1;
             break;
         case ']':
-            if(loop)
-                index = pos;
+            if(l) i = ps;
             break;
         default:
             break;
         }
-        ++index;
     }
     return 0;
 }
