@@ -1,3 +1,3 @@
 @echo off
-gcc brainfuck.c -o brainfuck.exe -Wall -Os -static
-strip brainfuck.exe
+clang brainfuck.c -o brainfuck.exe -Wall -Os -static
+llvm-strip brainfuck.exe

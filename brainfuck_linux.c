@@ -8,7 +8,7 @@ int main(int argc, char** argv){
     unsigned char p = 0;
     FILE *fp;
     char s[1000];
-    if (fopen_s(&fp, argv[1], "rb")) {
+    if(!(fp = fopen(argv[1], "rb"))) {
         printf("Couldn't open file\n");
         return 1;
     }
